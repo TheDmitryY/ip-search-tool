@@ -9,24 +9,45 @@ IP_LIST=(
 	"10.0.1.1"
 )
 
-PING_COUNT=2
+YELLOW='\e[33m'
+GREEN='\e[32m'
+RED='\e[31m'
+NC='\e[0m'
 
+PING_COUNT=1
+
+clear
+echo -e "${YELLOW}"
+figlet IpSearch
+
+echo "++++++++++++++++++++++++++++++++++++++++++++++++++"
+
+echo " "
+
+echo "App using base ip pool by the creator of program. Author - TheDmitryY"
 # Функція для перевірки хоста
+
+echo " "
+
 check_host() {
 	local ip=$1
 	if ping -c $PING_COUNT $ip >/dev/null 2>&1; then
-		echo "Хост $ip - ONLINE"
+		echo -e "Хост $ip - ${GREEN}ONLINE ${NC}"
+		echo -e "${YELLOW}"
 		return 0
 	else
-		echo "Хост $ip - OFFLINE"
+		echo -e "Хост $ip - ${RED}OFFLINE ${NC}"
+		echo -e "${YELLOW}"
 		return 1
 	fi
 }
 
 # Головний цикл перевірки
 echo "Початок перевірки хостів..."
+echo " "
 for ip in "${IP_LIST[@]}"; do
 	check_host "$ip"
 done
 
 echo "Перевірка завершена."
+echo -e "${NC}"
